@@ -1,0 +1,39 @@
+<div data-multi-step-form-target="step" class="step space-y-4 hidden">
+  <div class="flex align-baseline space-x-2">
+    <p class="text-md text-[#252525]"><%= step_number %> →</p>
+    <div class="flex-grow">
+      <div class="flex flex-col items-start space-y-2">
+        <h2 class="text-2xl text-[#252525]"><%= step[:title] %>*</h2>
+        <p class="text-[#5F5F5E]"><%= step[:description] %></p>
+        <% if step[:note] %>
+          <p class="text-xs text-[#5F5F5E]"><%= step[:note] %></p>
+        <% end %>
+      </div>
+
+      <% if step[:fields] %>
+        <% step[:fields].each do |field_data| %>
+          <%= render_form_field(form, field_data) %>          
+          <% if field_data[:required] %>
+            <p class="error-message text-red-500 text-xs hidden text-left mt-1"><%= field_data[:error_message] %></p>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= render_form_field(form, step) %>
+        <% if step[:required] %>
+          <p class="error-message text-red-500 text-xs hidden text-left mt-1"><%= step[:error_message] %></p>
+        <% end %>
+      <% end %>
+
+      <div class="flex justify-start items-center space-x-2 mt-5">
+        <% if previous %>
+          <button type="button" class="bg-gray-500 text-white px-5 py-1.5 rounded-md font-semibold text-xl" data-action="click->multi-step-form#previousStep">Back</button>
+        <% end %>
+        <% if nexter %>
+          <button type="button" class="bg-[#59672D] text-white px-5 py-1.5 rounded-md font-semibold text-xl" data-action="click->multi-step-form#nextStep">Next</button>
+        <% else %>
+          <button type="submit" class="bg-[#59672D] text-white px-5 py-1.5 rounded-md font-semibold text-xl">Submit</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

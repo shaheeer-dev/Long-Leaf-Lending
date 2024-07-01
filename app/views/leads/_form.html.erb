@@ -1,0 +1,7 @@
+<div class="text-center" data-controller="multi-step-form" data-multi-step-form-current-step-value="0" data-form-toggle-target="multiStepForm">
+  <%= form_with model: @lead, local: true, id: 'lead-form', data: { action: "submit->multi-step-form#nextStep" } do |form| %>
+    <% form_steps.each_with_index do |step, index| %>
+      <%= render 'form_step', form: form, step: step, step_number: index + 1, previous: index > 0, nexter: index < form_steps.size - 1 %>
+    <% end %>
+  <% end %>
+</div>

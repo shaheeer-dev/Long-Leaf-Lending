@@ -1,0 +1,18 @@
+<div class='text-center'>
+    <h1 class="text-4xl font-bold mb-2">Real Estate Profit and Return Calculator</h1>
+    <p class="text-lg mb-4">Start here with our 45 second form.</p>
+</div>
+
+<div class="flex flex-col items-center justify-center h-[75vh] bg-[#E6E7E4] relative" data-controller="form-toggle">
+  <div class="absolute top-0 left-0 m-4">
+    <img src="<%= asset_path('longleaf_lending_logo.png') %>" alt="Longleaf Lending" class="h-16">
+  </div>
+
+  <div id="starter-screen" data-form-toggle-target="starterScreen">
+    <%= render 'starter_screen' %>
+  </div>
+
+  <div id="multistep-form" class='hidden w-[750px]' data-form-toggle-target="multiStepForm">
+    <%= render 'form' %>
+  </div>
+</div>
