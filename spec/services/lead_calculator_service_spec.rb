@@ -22,20 +22,35 @@ RSpec.describe LeadCalculatorService do
     end
 
     it "calculates the correct loan amount" do
-      expected_loan_amount = ([lead.purchase_price * 0.9, lead.arv * 0.7].min + lead.repair_budget).round(2)
+      max_loan_by_purchase_price = lead.purchase_price * 0.9
+      max_loan_by_arv = lead.arv * 0.7
+      initial_loan_amount = [max_loan_by_purchase_price, max_loan_by_arv].min
+      total_loan_amount = initial_loan_amount + lead.repair_budget
+      expected_loan_amount = [total_loan_amount, max_loan_by_arv].min.round(2)
+
       expect(@result[:loan_amount]).to eq(expected_loan_amount)
     end
 
     it "calculates the correct total interest expense" do
-      loan_amount = [lead.purchase_price * 0.9, lead.arv * 0.7].min + lead.repair_budget
+      max_loan_by_purchase_price = lead.purchase_price * 0.9
+      max_loan_by_arv = lead.arv * 0.7
+      initial_loan_amount = [max_loan_by_purchase_price, max_loan_by_arv].min
+      total_loan_amount = initial_loan_amount + lead.repair_budget
+      loan_amount = [total_loan_amount, max_loan_by_arv].min
       expected_interest_expense = (loan_amount * (0.13 / 12) * lead.loan_term).round(2)
+
       expect(@result[:total_interest_expense]).to eq(expected_interest_expense)
     end
 
     it "calculates the correct estimated profit" do
-      loan_amount = [lead.purchase_price * 0.9, lead.arv * 0.7].min + lead.repair_budget
+      max_loan_by_purchase_price = lead.purchase_price * 0.9
+      max_loan_by_arv = lead.arv * 0.7
+      initial_loan_amount = [max_loan_by_purchase_price, max_loan_by_arv].min
+      total_loan_amount = initial_loan_amount + lead.repair_budget
+      loan_amount = [total_loan_amount, max_loan_by_arv].min
       total_interest_expense = loan_amount * (0.13 / 12) * lead.loan_term
       expected_profit = (lead.arv - loan_amount - total_interest_expense).round(2)
+
       expect(@result[:estimated_profit]).to eq(expected_profit)
     end
   end

@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :leads, only: %i[new create]
+
+  root to: "leads#new"
 end

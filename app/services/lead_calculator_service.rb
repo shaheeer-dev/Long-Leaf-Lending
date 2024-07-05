@@ -2,7 +2,6 @@ class LeadCalculatorService
   FUNDABLE_LOAN_PERCENTAGE = 0.9
   ARV_LOAN_PERCENTAGE = 0.7
   INTEREST_RATE = 0.13
-
   attr_reader :lead
 
   def initialize(lead)
@@ -28,7 +27,13 @@ class LeadCalculatorService
   end
 
   def loan_amount
-    [max_loan_by_purchase_price, max_loan_by_arv].min + lead.repair_budget
+    max_loan = [max_loan_by_purchase_price, max_loan_by_arv].min
+    total_loan = max_loan + lead.repair_budget
+    if total_loan > max_loan_by_arv
+      max_loan_by_arv
+    else
+      total_loan
+    end
   end
 
   def monthly_interest_rate
