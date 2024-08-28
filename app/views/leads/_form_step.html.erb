@@ -12,7 +12,7 @@
 
       <% if step[:fields] %>
         <% step[:fields].each do |field_data| %>
-          <%= render_form_field(form, field_data) %>          
+          <%= render_form_field(form, field_data) %>
           <% if field_data[:required] %>
             <p class="error-message text-red-500 text-xs hidden text-left mt-1"><%= field_data[:error_message] %></p>
           <% end %>

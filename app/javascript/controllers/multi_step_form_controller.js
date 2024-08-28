@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["step", "error", "input"]
 
   connect() {
+    this.loadFormData();
     this.showCurrentStep();
     this.inputTargets.forEach(input => {
       input.addEventListener('input', this.clearError.bind(this));
@@ -14,6 +15,7 @@ export default class extends Controller {
     this.stepTargets.forEach((element, index) => {
       element.classList.toggle('hidden', index !== this.currentStep);
     });
+    localStorage.setItem('currentStep', this.currentStep);
   }
 
   nextStep(event) {
@@ -33,10 +35,12 @@ export default class extends Controller {
     });
 
     if (allValid) {
+      this.saveFormData();
       if (this.currentStep < this.stepTargets.length - 1) {
         this.currentStep++;
         this.showCurrentStep();
       } else {
+        this.clearFormData();
         const form = this.element.querySelector("form");
         form.submit();
       }
@@ -59,10 +63,32 @@ export default class extends Controller {
   }
 
   get currentStep() {
-    return parseInt(this.data.get("currentStep") || 0);
+    return parseInt(localStorage.getItem('currentStep')) || 0;
   }
 
   set currentStep(value) {
-    this.data.set("currentStep", value);
+    localStorage.setItem('currentStep', value);
+  }
+
+  saveFormData() {
+    const formData = {};
+    this.inputTargets.forEach(input => {
+      formData[input.name] = input.value;
+    });
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }
+
+  loadFormData() {
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    if (formData) {
+      this.inputTargets.forEach(input => {
+        input.value = formData[input.name] || '';
+      });
+    }
+  }
+
+  clearFormData() {
+    localStorage.removeItem('formData');
+    localStorage.removeItem('currentStep');
   }
 }

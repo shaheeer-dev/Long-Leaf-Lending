@@ -1,14 +1,21 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["starterScreen", "multiStepForm", "startButton"]
+  static targets = ["starterScreen", "multiStepForm"]
 
   connect() {
-    this.startButtonTarget.addEventListener('click', this.showForm.bind(this))
+    this.checkCurrentStep();
   }
 
-  showForm() {
-    this.starterScreenTarget.classList.add('hidden')
-    this.multiStepFormTarget.classList.remove('hidden')
+  checkCurrentStep() {
+    const currentStep = parseInt(localStorage.getItem('currentStep')) || 0;
+    if (currentStep > 0) {
+      this.hideStarterScreen();
+    }
+  }
+
+  hideStarterScreen() {
+    this.starterScreenTarget.classList.add('hidden');
+    this.multiStepFormTarget.classList.remove('hidden');
   }
 }
