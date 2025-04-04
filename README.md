@@ -24,7 +24,7 @@ This project is an in-house lead generation form and profit/return calculator. T
 
     ```bash
     git clone <repository_url>
-    cd longleaf_lending
+    cd lead_generation_calculator
     ```
 
 2. Install dependencies:
