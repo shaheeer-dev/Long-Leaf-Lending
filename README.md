@@ -83,12 +83,6 @@ bundle exec rspec
 -   **Sidekiq**: Sidekiq handles email sending asynchronously to avoid disrupting user experience during PDF generation and delivery.
 -   **Letter Opener**: Letter Opener is used in development to preview emails in the browser, simplifying debugging and verification of email content.
 
-## Screenshots
- - Here is the Few screenshots from the project.
-  
-  ![Screenshot of Initial Screen](./docs/images/starter_screen.png "Initial Screen")
-  ![Screenshot of Form Step 1](./docs/images/process_step_1.png "Form Step 1")
-
 ## PDF Example
 
 
